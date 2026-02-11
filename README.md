@@ -162,7 +162,21 @@ coverage run -m pytest tests
 coverage report
 ```
 
-Current coverage: ≥80%
+Result:
+
+```
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+tests/test_extract.py        30      0   100%
+tests/test_load.py           35      0   100%
+tests/test_transform.py      15      0   100%
+utils/__init__.py             0      0   100%
+utils/extract.py             48      8    83%
+utils/load.py                36      3    92%
+utils/transform.py           55     14    75%
+---------------------------------------------
+TOTAL                       219     25    89%
+```
 
 ## 📄 URL Google Sheets:
 
