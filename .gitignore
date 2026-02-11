@@ -1,6 +1,8 @@
 # Configuration files
-/.env
+/.venv
 /.vscode
+
+.env
 
 # Python cache files
 __pycache__/

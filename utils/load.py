@@ -6,10 +6,7 @@ from typing import Optional
 import os
 
 # LOAD TO CSV
-def save_to_csv(df: pd.DataFrame, filepath: str = "../products.csv") -> None:
-    """
-    Menyimpan data ke file CSV (flat file)
-    """
+def save_to_csv(df: pd.DataFrame, filepath: str = "products.csv") -> None:
     try:
         df.to_csv(filepath, index=False)
         print(f"[SUCCESS] Data berhasil disimpan ke CSV: {filepath}")
@@ -24,10 +21,10 @@ def save_to_google_sheets(
     sheet_name: str = "Sheet1", 
     credentials_path: str = "google-sheets-api.json"
 ) -> None:
-    """
-    Menyimpan data ke Google Sheets
-    """
     try:
+        if not spreadsheet_id:
+            raise ValueError("Spreadsheet ID is required.")
+        
         if not os.path.exists(credentials_path):
             raise FileNotFoundError(
                 f"Google credentials not found: {credentials_path}"
@@ -63,10 +60,10 @@ def save_to_postgresql(
     connection_uri: str,
     if_exists: str = "replace"
 ) -> None:
-    """
-    Menyimpan data ke PostgreSQL menggunakan SQLAlchemy
-    """
     try:
+        if not connection_uri:
+            raise ValueError("Connection URI is required.")
+        
         engine = create_engine(connection_uri)
         df.to_sql(
             table_name,

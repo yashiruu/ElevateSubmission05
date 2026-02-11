@@ -68,12 +68,21 @@ def scrape_all_products() -> List[Dict]:
     all_products: List[Dict] = []
     timestamp = datetime.utcnow().isoformat()
 
-    for page in range(1, TOTAL_PAGES + 1):
-        page_products = scrape_page(session, page)
+    try:
+        for page in range(1, TOTAL_PAGES + 1):
+            page_products = scrape_page(session, page)
+            
+            if not page_products:
+                print(f"[WARNING] Page {page} returned 0 products.")
 
-        for product in page_products:
-            product["timestamp"] = timestamp
+            for product in page_products:
+                product["timestamp"] = timestamp
 
-        all_products.extend(page_products)
+            all_products.extend(page_products)
+    finally:
+        session.close()
+
+    if not all_products:
+        raise RuntimeError("No data extracted from website.")
 
     return all_products

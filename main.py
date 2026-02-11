@@ -1,23 +1,38 @@
 import utils.extract as extract
 import utils.transform as transform
 from utils import load
-import json
+from dotenv import load_dotenv
+import os
+
+# load .env
+load_dotenv()
 
 if __name__ == "__main__":
+    # ===============================
+    # Extract Data
+    # ===============================
     data = extract.scrape_all_products()
-    data_df = transform.transform_products(data)
-    print(data_df)
+    print(f"Total data extracted : {len(data)}")
+
     
-    # save dataframe
+    # ===============================
+    # Transform Data
+    # ===============================
+    data_df = transform.transform_products(data)
+    print(f"Total data cleaned   : {len(data_df)}")
+    
+    # ===============================
+    # Load Data
+    # ===============================
     load.save_to_csv(data_df)
     
     load.save_to_google_sheets(
         df=data_df,
-        spreadsheet_id="1tWZkZovHqIjOPCy7MkupIkFS7DC3f_IdBxCQ-QRHOWQ"
+        spreadsheet_id=os.getenv("GOOGLE_SPREADSHEET_ID")
     )
      
     load.save_to_postgresql(
         df=data_df,
-        connection_uri="postgresql+psycopg2://postgres:bukangajah@127.0.0.1:5432/db_etl",
+        connection_uri=os.getenv("DB_URI"),
         table_name="tb_fashion"
     )

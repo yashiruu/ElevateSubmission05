@@ -84,7 +84,7 @@ def remove_invalid_and_duplicate(df: pd.DataFrame) -> pd.DataFrame:
     - product tidak valid
     """
     try:
-        df = df.dropna()
+        df = df.dropna(subset=["title", "price", "rating", "colors", "size", "gender"])
         df = df.drop_duplicates()
         df = df[df["title"] != "Unknown Product"]
         return df
