@@ -1,0 +1,10 @@
+# Configuration files
+/.env
+/.vscode
+
+# Python cache files
+__pycache__/
+
+# google api json
+google-sheets-api.json
+notebooks/google-sheets-api.json
