@@ -3,9 +3,12 @@
 /.vscode
 
 .env
+.coverage
+products.csv
 
 # Python cache files
 __pycache__/
+/.pytest_cache
 
 # google api json
 google-sheets-api.json
