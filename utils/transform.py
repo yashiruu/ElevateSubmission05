@@ -7,7 +7,7 @@ def _to_dataframe(data: List[Dict]) -> pd.DataFrame:
     try:
         return pd.DataFrame(data)
     except Exception as e:
-        raise ValueError(f"Failed to convert data to DataFrame: {e}")
+        raise ValueError(f"[ERROR] Failed to convert data to DataFrame: {e}")
 
 
 def clean_price(df: pd.DataFrame) -> pd.DataFrame:
@@ -21,7 +21,7 @@ def clean_price(df: pd.DataFrame) -> pd.DataFrame:
         )
         return df
     except Exception as e:
-        raise ValueError(f"Price transformation failed: {e}")
+        raise ValueError(f"[ERROR] Price transformation failed: {e}")
 
 
 def clean_rating(df: pd.DataFrame) -> pd.DataFrame:
@@ -34,7 +34,7 @@ def clean_rating(df: pd.DataFrame) -> pd.DataFrame:
         )
         return df
     except Exception as e:
-        raise ValueError(f"Rating transformation failed: {e}")
+        raise ValueError(f"[ERROR] Rating transformation failed: {e}")
 
 
 def clean_colors(df: pd.DataFrame) -> pd.DataFrame:
@@ -43,11 +43,11 @@ def clean_colors(df: pd.DataFrame) -> pd.DataFrame:
             df["colors"]
             .astype(str)
             .str.extract(r"(\d+)")
-            .astype(int)
+            .astype("int64")
         )
         return df
     except Exception as e:
-        raise ValueError(f"Colors transformation failed: {e}")
+        raise ValueError(f"[ERROR] Colors transformation failed: {e}")
 
 
 def clean_size(df: pd.DataFrame) -> pd.DataFrame:
@@ -60,7 +60,7 @@ def clean_size(df: pd.DataFrame) -> pd.DataFrame:
         )
         return df
     except Exception as e:
-        raise ValueError(f"Size transformation failed: {e}")
+        raise ValueError(f"[ERROR] Size transformation failed: {e}")
 
 
 def clean_gender(df: pd.DataFrame) -> pd.DataFrame:
@@ -73,23 +73,17 @@ def clean_gender(df: pd.DataFrame) -> pd.DataFrame:
         )
         return df
     except Exception as e:
-        raise ValueError(f"Gender transformation failed: {e}")
+        raise ValueError(f"[ERROR] Gender transformation failed: {e}")
 
 
 def remove_invalid_and_duplicate(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Menghapus:
-    - nilai null
-    - duplikat
-    - product tidak valid
-    """
     try:
         df = df.dropna(subset=["title", "price", "rating", "colors", "size", "gender"])
         df = df.drop_duplicates()
         df = df[df["title"] != "Unknown Product"]
         return df
     except Exception as e:
-        raise ValueError(f"Data filtering failed: {e}")
+        raise ValueError(f"[ERROR] Data filtering failed: {e}")
 
 
 def transform_products(data: List[Dict]) -> pd.DataFrame:
@@ -107,5 +101,8 @@ def transform_products(data: List[Dict]) -> pd.DataFrame:
     df = clean_size(df)
     df = clean_gender(df)
     df = remove_invalid_and_duplicate(df)
+    
+    print(f"[SUCCESS] Total data cleaned   : {len(df)}\n")
+    print(df.info(), "\n")
 
     return df

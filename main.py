@@ -12,14 +12,11 @@ if __name__ == "__main__":
     # Extract Data
     # ===============================
     data = extract.scrape_all_products()
-    print(f"Total data extracted : {len(data)}")
-
     
     # ===============================
     # Transform Data
     # ===============================
     data_df = transform.transform_products(data)
-    print(f"Total data cleaned   : {len(data_df)}")
     
     # ===============================
     # Load Data

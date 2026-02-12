@@ -1,5 +1,6 @@
 # Menjalankan skrip ETL pipeline
 python3 main.py
+python -W ignore::FutureWarning main.py (Clean Run without FutureWarning)
 
 
 # Menjalankan unit test pada folder tests

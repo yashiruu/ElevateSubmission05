@@ -81,8 +81,9 @@ def scrape_all_products() -> List[Dict]:
             all_products.extend(page_products)
     finally:
         session.close()
+        print(f"[SUCCESS] Total data extracted : {len(all_products)}")
 
     if not all_products:
-        raise RuntimeError("No data extracted from website.")
+        raise RuntimeError("[ERROR] No data extracted from website.")
 
     return all_products
