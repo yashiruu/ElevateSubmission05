@@ -9,6 +9,7 @@ products.csv
 # Python cache files
 __pycache__/
 /.pytest_cache
+*.zip
 
 # google api json
 google-sheets-api.json
